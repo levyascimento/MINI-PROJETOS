@@ -345,24 +345,36 @@ while True:
         from random import randint as r
         boa("\033[34mBEM VINDO AO MINI GAME (ACERTE O NUMERO)\033[m")
         sleep(1)
+        numeros = list()
         while True:
             print("\033[35mPara começar digite um numero de 1 a 50!\033[m")
             try:
-                numero = int(input("\033[36mDigite um numero: \033[m"))
+                num = int(input("\033[36mDigite um numero de 1 á 50: \033[m"))
+                while num > 50:
+                    print("\033[31mDigite um numero menor que 50!\033[m")
+                    num = int(input("\033[36mDigite um numero de 1 á 50: \033[m"))
             except:
                 print("\033[1;31mApenas numeros inteiros! (nada de letras)\033[m")
-            n = r(1, 50)
-            resul = n + numero
+            n = r(1, 51)
+            resul = n + num
             respo = 0
+            contador = 0 
             while respo != resul:
                 try:
-                    respo = int(input(f"\033[36mAgora tente acertar o numero pensado pela maquina : \033[m")) 
+                    respo = int(input(f"\033[36mAgora tente acertar o numero pensado pela maquina : \033[m"))
+                    contador += 1
+                    numeros.append(respo)
+                    if numeros.count(respo) > 1:
+                        contador -= 1
+                        print("\033[31mVocê já digitou esse numero! Não sera contado como tentativa.\033[m")
+                    elif respo > resul:
+                        print("\033[32mO Valor digitado é\033[m \033[34mMAIOR\033[m \033[32mque o valor sorteado!\033[m")
+                    elif respo < resul:
+                        print("\033[32mO Valor digitado é\033[m \033[34mMENOR\033[m \033[32mque o valor sorteado!\033[m")
                 except:
                     print("\033[1;31mApenas numeros inteiros! (nada de letras)")
-                if respo > resul:
-                    print("\033[32mO Valor digitado é\033[m \033[34mMAIOR\033[m \033[32mque o valor sorteado!\033[m")
-                elif respo < resul:
-                    print("\033[32mO Valor digitado é\033[m \033[34mMENOR\033[m \033[32mque o valor sorteado!\033[m")
+            print(f"\033[34mParabéns você acertou com\033[m \033[31m{contador}\033[m \033[34mTentativas!\033[m")
+            numeros.clear()
             perguntaMini = input("\033[36mQuer jogar novamente? [S/N]: \033[m").upper().strip()[0]
             while perguntaMini not in "SN":
                 print("\033[31mDigite um valor valido!\033[m")
